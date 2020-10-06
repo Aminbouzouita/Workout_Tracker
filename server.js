@@ -21,3 +21,14 @@ app.get("/api/workouts", (req, res) => {
     res.status(200).json(found);
   });
 });
+
+//Create exercices
+app.post("/api/workouts"),(req,res) => {
+  db.exercise.create({body})
+  .then(Exercice => {
+    console.log(Exercice);
+  })
+  .catch(({ message }) => {
+    console.log(message);
+  });
+}
