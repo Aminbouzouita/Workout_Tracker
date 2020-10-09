@@ -2,9 +2,8 @@
 const express = require("express");
 const logger = require("morgan");
 const mongoose = require("mongoose");
-
 const PORT = process.env.PORT || 3000;
-
+var path = require('path');
 const db = require("./models");
 
 const app = express();
@@ -16,8 +15,10 @@ app.use(express.json());
 
 app.use(express.static("public"));
 
-mongoose.connect(process.env.MONGODB_URI || "mongodb://localhost/workout", { useNewUrlParser: true,  useFindAndModify: false });
-
+mongoose.connect(process.env.MONGODB_URI || "mongodb://localhost/workout", { useNewUrlParser: true,  useFindAndModify: false,  useUnifiedTopology: true });
+// app.get("/exercise", (req, res) => {
+//   res.sendFile(path.join(__dirname+'/public/index.html'));
+// });
 // Find all Workouts
 app.get("/api/workouts", (req, res) => {
   db.Workout.find({})
@@ -28,10 +29,12 @@ app.get("/api/workouts", (req, res) => {
   });
 });
 
-//Create Exercice
-app.put("/api/workouts/:id",({exercices},res) => {
-  db.Workout.update({exercices})
-  .then(({ _id }, { $push: { exercices: _id } }, { new: true }))
+//Update Workout
+
+app.put("/api/workouts/:id",(req,res) => {
+  const {_id, name, type, weight, duration, reps, sets, distance} = req.body;
+  db.Workout.update(
+  ({}, { $push: { exercises: { name, type, weight, duration, reps, sets, distance}} }))
   .then(dbWorkout => {
     res.json(dbWorkout);
   })
@@ -39,20 +42,16 @@ app.put("/api/workouts/:id",({exercices},res) => {
     res.json(err);
   });
 })
-// 4. Update one note in the database's collection by it's ObjectId
-// (remember, mongojs.ObjectId(IdYouWantToFind)
-// POST: /api/workouts/:id
-// ================================================================
-// app.put("/api/workouts/:id", function({body}, res) {
-//   db.Workout.update({ name, type, weight, sets, reps, duration ,distance})
-//   .then(({_id:id}) => db.Workout.findOneAndUpdate({}, { $push: { exercices: _id } }, { new: true }))
-//    .then(function(err, data) {
-//       if (err) throw err;
-//       res.status(200).json(data);
-//     }
-//   );
-// });
 
+// app.post("/api/workouts", ({ body }, res) => {
+//   db.Workout.create(body)
+//     .then(data => {
+//       res.status(201).json(data);
+//     })
+//     .catch(err => {
+//       res.status(400).json(err);
+//     });
+// });
 
 // Start the server
 app.listen(PORT, () => {
