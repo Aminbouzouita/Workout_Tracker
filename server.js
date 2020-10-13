@@ -26,8 +26,8 @@ app.get("/stats", (req, res) => {
 // Find all Workouts
 app.get("/api/workouts", (req, res) => {
   db.Workout.find({})
-  .then(function (dbUser) {
-    res.json(dbUser);
+  .then(function (dbWorkout) {
+    res.json(dbWorkout);
   }).catch(function (err) {
     res.json(err);
   });
@@ -50,10 +50,10 @@ app.put("/api/workouts/:id",(req,res) => {
 app.post("/api/workouts", (req, res) => {
 const date = Date.now();
 const data = req.body;
-  db.Workout.create( {day: date})
-  .then(({_id}) => db.Workout.findOneAndUpdate({_id}, { $push: { exercises: data  } }))
-  .then(dbUser => {
-    res.json(dbUser);
+  db.Workout.create({})
+  .then(({_id}) => db.Workout.findOneAndUpdate({_id}, { $push: {day: date, exercises: data  } }))
+  .then(dbWorkout => {
+    res.json(dbWorkout);
   })
   .catch(err => {
     res.json(err);
@@ -63,8 +63,8 @@ const data = req.body;
 // find workout by range
   app.get("/api/workouts/range", (req, res) => {
     db.Workout.find({})
-    .then(function (dbUser) {
-      res.json(dbUser);
+    .then(function (dbWorkout) {
+      res.json(dbWorkout);
     }).catch(function (err) {
       res.json(err);
     });
