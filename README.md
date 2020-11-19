@@ -14,6 +14,8 @@ npm intall
 npm start
 ## badges
 ![License](https://img.shields.io/badge/javascript-57.8-blue) 
-#### URL Github Repo:
- https://aminbouzouita.github.io/Workout_Tracker/
+#### Heroku-Link: 
+https://workouttrackerandstat.herokuapp.com/stats
+#### URL Github Repo: 
+https://aminbouzouita.github.io/Workout_Tracker/
 
