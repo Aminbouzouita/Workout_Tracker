@@ -4,7 +4,7 @@ An application that allow user to Track saved Workouts ,add and update exercices
 ## Technologies used
 * [HTML5](#HTML5)
 * [CSS3](#CSS3)
-* [MONGOOSEDB](#MONGOOSEDB)
+* [MONGODB](#MONGODB)
 * [NODEJS](#NODEJS)
 * [JAVASCRIPT](#JAVASCRIPT)
 * [EXPRESS](#EXPRESS)
